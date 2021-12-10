@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ChartData, ChartType} from "chart.js";
+import { Component, Input, OnInit } from '@angular/core';
+import { ChartData, ChartType } from "chart.js";
 
 @Component({
   selector: 'app-dona',
