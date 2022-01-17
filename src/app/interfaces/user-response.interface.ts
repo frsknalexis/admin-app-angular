@@ -1,8 +1,7 @@
 import { User } from "../models/user.model";
 
-export interface LoginResponse {
+export interface UserResponse {
 
   ok: boolean,
-  token: string;
   user?: User
 }

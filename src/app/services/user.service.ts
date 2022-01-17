@@ -7,6 +7,8 @@ import { catchError, map, tap } from "rxjs/operators";
 import { LoginResponse } from "../interfaces/login-response.interface";
 import { of } from "rxjs";
 import {Router} from "@angular/router";
+import { User } from "../models/user.model";
+import {UserResponse} from "../interfaces/user-response.interface";
 
 declare const gapi: any;
 
@@ -19,10 +21,21 @@ export class UserService {
 
   public auth2: any;
 
+  // @ts-ignore
+  public user: User;
+
   constructor(private httpClient: HttpClient,
               private router: Router,
               private ngZone: NgZone) {
     this.googleInit();
+  }
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get userId(): string {
+    return this.user.userId || '';
   }
 
   googleInit() {
@@ -50,14 +63,18 @@ export class UserService {
   }
 
   validateToken() {
-    const token = localStorage.getItem('token') || '';
     return this.httpClient.get<LoginResponse>(`${ this.baseURIApi }/login/refresh`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
-    }).pipe(tap((response: LoginResponse) => localStorage.setItem('token', response.token)),
-      map((response: LoginResponse) => true),
-      catchError((e) => of(false)));
+    }).pipe(
+      map((response: LoginResponse) => {
+        // @ts-ignore
+        const { email, google, image = '', name, role, userId } = response.user;
+        this.user = new User(name, email,'', google, image, userId, role);
+        localStorage.setItem('token', response.token)
+        return true;
+      }), catchError((e) => of(false)));
   }
 
   createUser(registerForm: RegisterForm) {
@@ -73,5 +90,20 @@ export class UserService {
   googleSignIn(token: string) {
     return this.httpClient.post<LoginResponse>(`${ this.baseURIApi }/login/google`, { token: token })
       .pipe(tap((response: LoginResponse) => localStorage.setItem('token', response.token)));
+  }
+
+  updateProfile(data: { name: string, email: string }) {
+    const userRequest = {
+      name: data.name,
+      email: data.email,
+      role: this.user.role
+    };
+
+    return this.httpClient.put<UserResponse>(`${ this.baseURIApi }/users/${ this.userId }`,
+      userRequest, {
+      headers: {
+        'x-token': this.token
+      }
+    });
   }
 }

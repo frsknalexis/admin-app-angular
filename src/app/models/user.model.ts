@@ -1,3 +1,7 @@
+import { environment } from "../../environments/environment";
+
+const baseURIApi = environment.baseURIApi;
+
 export class User {
 
   constructor(
@@ -9,4 +13,16 @@ export class User {
     public userId?: string,
     public role?: string
   ) {  }
+
+  get imageUrl() {
+    if (this.image?.includes('https')) {
+      return this.image;
+    }
+
+    if (this.image) {
+      return `${ baseURIApi }/upload/users/${ this.image }`;
+    } else {
+      return `${ baseURIApi }/upload/users/no-image`;
+    }
+  }
 }
