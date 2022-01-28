@@ -15,11 +15,10 @@ export class User {
   ) {  }
 
   get imageUrl() {
-    if (this.image?.includes('https')) {
-      return this.image;
-    }
-
     if (this.image) {
+      if (this.image?.includes('https')) {
+        return this.image;
+      }
       return `${ baseURIApi }/upload/users/${ this.image }`;
     } else {
       return `${ baseURIApi }/upload/users/no-image`;

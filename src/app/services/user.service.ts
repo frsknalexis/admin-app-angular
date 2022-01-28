@@ -9,6 +9,7 @@ import { of } from "rxjs";
 import {Router} from "@angular/router";
 import { User } from "../models/user.model";
 import {UserResponse} from "../interfaces/user-response.interface";
+import {LoadUsers} from "../interfaces/load-users.interface";
 
 declare const gapi: any;
 
@@ -105,5 +106,43 @@ export class UserService {
         'x-token': this.token
       }
     });
+  }
+
+  loadUsers(from: number = 0, to: number = 10) {
+    return this.httpClient.get<LoadUsers>(`${ this.baseURIApi }/users?from=${ from }&to=${ to }`,
+      {
+        headers: {
+          'x-token': this.token
+        }
+      }).pipe(
+        map((response: LoadUsers) => {
+          const users = response.users
+            .map((user) => new User(user.name, user.email, '',
+              user.google, user.image, user.userId, user.role));
+
+          return {
+            ok: response.ok,
+            users,
+            total: response.total
+          }
+        }));
+  }
+
+  deleteUser(user: User) {
+    return this.httpClient.delete(`${ this.baseURIApi }/users/${ user.userId }`,
+      {
+        headers: {
+          'x-token': this.token
+        }
+      });
+  }
+
+  updateUser(user: User) {
+    return this.httpClient.put<UserResponse>(`${ this.baseURIApi }/users/${ user.userId }`, user,
+      {
+        headers: {
+          'x-token': this.token
+        }
+      });
   }
 }

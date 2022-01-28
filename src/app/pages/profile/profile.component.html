@@ -30,8 +30,8 @@
                      class="form-control"
                      id="exampleInputEmail1"
                      placeholder="Enter email"
-                     formControlName="email">
-              <!--[readOnly]="user.google"-->
+                     formControlName="email"
+                     [readOnly]="user.google">
             </div>
           </div>
           <button type="submit"
@@ -60,6 +60,7 @@
                *ngIf="imageTemp">
         </div>
         <input type="file"
+               class="form-control"
                (change)="changeImage($event)" >
         <br/>
         <br/>
