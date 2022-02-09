@@ -42,6 +42,7 @@
           </button>
           <button type="button"
                   class="btn btn-primary"
+                  [disabled]="!uploadFile"
                   (click)="uploadImage()">Actualizar Imagen</button>
         </div>
       </div>

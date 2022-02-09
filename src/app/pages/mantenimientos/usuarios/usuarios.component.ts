@@ -65,9 +65,10 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     if (searchText.length === 0) {
       this.users = this.usersTemp;
     } else {
-      this.searchsService.searchUsers('users', searchText)
+      this.searchsService.search('users', searchText)
         .subscribe((response) => {
           console.log(response);
+          // @ts-ignore
           this.users = response;
         });
     }

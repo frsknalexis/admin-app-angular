@@ -7,9 +7,12 @@ import { Grafica1Component } from "./grafica1/grafica1.component";
 import { AccountSettingsComponent } from "./account-settings/account-settings.component";
 import { PromesasComponent } from "./promesas/promesas.component";
 import { RxjsComponent } from "./rxjs/rxjs.component";
-import {AuthGuard} from "../guards/auth.guard";
-import {ProfileComponent} from "./profile/profile.component";
-import {UsuariosComponent} from "./mantenimientos/usuarios/usuarios.component";
+import { AuthGuard } from "../guards/auth.guard";
+import { ProfileComponent } from "./profile/profile.component";
+import { UsuariosComponent } from "./mantenimientos/usuarios/usuarios.component";
+import { HospitalesComponent } from "./mantenimientos/hospitales/hospitales.component";
+import { MedicosComponent } from "./mantenimientos/medicos/medicos.component";
+import { MedicoComponent} from "./mantenimientos/medicos/medico.component";
 
 const appRoutes: Routes = [
   { path: 'dashboard',
@@ -23,7 +26,10 @@ const appRoutes: Routes = [
       { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
       { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil de Usuario' } },
-      { path: 'users', component: UsuariosComponent, data: { titulo: 'Usuarios' } }
+      { path: 'users', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
+      { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Hospitales' } },
+      { path: 'medicos', component: MedicosComponent, data: { titulo: 'Medicos' } },
+      { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Medicos' } }
     ]
   }
 ]
