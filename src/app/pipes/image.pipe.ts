@@ -8,7 +8,7 @@ export class ImagePipe implements PipeTransform {
 
   private baseURIApi: string = environment.baseURIApi;
 
-  transform(image: string, type: string): string {
+  transform(image: string = 'no-image', type: string): string {
     if (image) {
       if (image.includes('https')) {
         return image;

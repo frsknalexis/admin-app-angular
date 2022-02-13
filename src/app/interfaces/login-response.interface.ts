@@ -1,8 +1,10 @@
 import { User } from "../models/user.model";
+import { MenuResponse } from "./menu-response.interface";
 
 export interface LoginResponse {
 
-  ok: boolean,
+  ok: boolean;
   token: string;
-  user?: User
+  user?: User;
+  menu: MenuResponse[];
 }

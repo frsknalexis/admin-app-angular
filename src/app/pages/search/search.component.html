@@ -1,0 +1,107 @@
+<div class="row animated fadeIn fast">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Usuarios</h3>
+        <div class="alert alert-info"
+             *ngIf="users.length === 0">
+          <p class="mb-0">
+            No hay usuarios con ese termino de busqueda
+          </p>
+        </div>
+        <div class="table-responsive"
+             *ngIf="users.length !== 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users"
+                class="animated fadeIn fast">
+              <td>
+                <img [src]="user.image | image:'users'"
+                     [alt]="user.name"
+                     class="w75">
+              </td>
+              <td>{{ user.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Medicos</h3>
+        <div class="alert alert-info"
+             *ngIf="medicos.length === 0">
+          <p class="mb-0">
+            No hay medicos con ese termino de busqueda
+          </p>
+        </div>
+        <div class="table-responsive"
+             *ngIf="medicos.length !== 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let medico of medicos"
+                class="animated fadeIn fast">
+              <td>
+                <img [src]="medico.image | image:'medicos'"
+                     [alt]="medico.name"
+                     class="w75">
+              </td>
+              <td>{{ medico.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Hospitales</h3>
+        <div class="alert alert-info"
+             *ngIf="hospitales.length === 0">
+          <p class="mb-0">
+            No hay hospitales con ese termino de busqueda
+          </p>
+        </div>
+        <div class="table-responsive"
+             *ngIf="hospitales.length !== 0">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let hospital of hospitales"
+                class="animated fadeIn fast">
+              <td>
+                <img [src]="hospital.image | image:'hospitales'"
+                     [alt]="hospital.name"
+                     class="w75">
+              </td>
+              <td>{{ hospital.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

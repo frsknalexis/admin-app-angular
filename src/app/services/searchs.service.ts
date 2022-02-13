@@ -61,4 +61,10 @@ export class SearchsService {
         })
       );
   }
+
+  searchAll(searchText: string) {
+    return this.httpClient.get<{ ok: boolean, users: User[],
+      medicos: Medico[], hospitales: Hospital[] }>(`${ this.baseURIApi }/search/${ searchText }`,
+      this.headers);
+  }
 }

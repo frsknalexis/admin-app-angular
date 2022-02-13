@@ -11,7 +11,7 @@ export class User {
     public google?: boolean,
     public image?: string,
     public userId?: string,
-    public role?: string
+    public role?: 'ADMIN_ROLE' | 'USER_ROLE'
   ) {  }
 
   get imageUrl() {

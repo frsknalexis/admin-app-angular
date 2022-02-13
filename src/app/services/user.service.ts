@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import { User } from "../models/user.model";
 import {UserResponse} from "../interfaces/user-response.interface";
 import {LoadUsers} from "../interfaces/load-users.interface";
+import {MenuResponse} from "../interfaces/menu-response.interface";
 
 declare const gapi: any;
 
@@ -39,6 +40,16 @@ export class UserService {
     return this.user.userId || '';
   }
 
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    // @ts-ignore
+    return this.user.role;
+  }
+
+  saveLocalStorage(token: string, menu: MenuResponse[]) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   googleInit() {
     return new Promise<void>((resolve) => {
       console.log('googleInit')
@@ -55,6 +66,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     this.auth2.signOut().then(() => {
       this.ngZone.run(() => {
         this.router.navigate(['/login']);
@@ -73,24 +85,30 @@ export class UserService {
         // @ts-ignore
         const { email, google, image = '', name, role, userId } = response.user;
         this.user = new User(name, email,'', google, image, userId, role);
-        localStorage.setItem('token', response.token)
+        this.saveLocalStorage(response.token, response.menu);
         return true;
       }), catchError((e) => of(false)));
   }
 
   createUser(registerForm: RegisterForm) {
     return this.httpClient.post(`${ this.baseURIApi }/users`, registerForm)
-      .pipe(tap((response: any) => localStorage.setItem('token', response.token)));
+      .pipe(tap((response: any) => {
+        this.saveLocalStorage(response.token, response.menu);
+      }));
   }
 
   login(loginForm: LoginForm) {
     return this.httpClient.post<LoginResponse>(`${ this.baseURIApi }/login`, loginForm)
-      .pipe(tap((response: LoginResponse) => localStorage.setItem('token', response.token)));
+      .pipe(tap((response: LoginResponse) => {
+        this.saveLocalStorage(response.token, response.menu);
+      }));
   }
 
   googleSignIn(token: string) {
     return this.httpClient.post<LoginResponse>(`${ this.baseURIApi }/login/google`, { token: token })
-      .pipe(tap((response: LoginResponse) => localStorage.setItem('token', response.token)));
+      .pipe(tap((response: LoginResponse) => {
+        this.saveLocalStorage(response.token, response.menu);
+      }));
   }
 
   updateProfile(data: { name: string, email: string }) {
