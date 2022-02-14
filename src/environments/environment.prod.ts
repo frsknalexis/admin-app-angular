@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseURIApi: 'http://localhost:3000/admin-app/v1'
+  baseURIApi: 'https://admin-pro-backend-server.herokuapp.com/admin-app/v1'
 };
